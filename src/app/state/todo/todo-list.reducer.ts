@@ -85,8 +85,8 @@ export const itemListReducer = createReducer(
       case SortType.DATE:
         sortedTodos.sort(
           (a, b) =>
-            new Date(a.dateCreated ?? 0).getTime() -
-            new Date(b.dateCreated ?? 0).getTime()
+            new Date(b.dateCreated ?? 0).getTime() -
+            new Date(a.dateCreated ?? 0).getTime()
         );
         break;
       case SortType.ALPHABETICAL:
