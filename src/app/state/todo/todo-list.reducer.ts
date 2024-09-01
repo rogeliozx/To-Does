@@ -19,26 +19,26 @@ export const initialState: ItemListState = {
 
 export const itemListReducer = createReducer(
   initialState,
-  on(deleteTodoItems, (state, { index }) => ({
+  on(deleteTodoItems, (state:ItemListState, { index }) => ({
     ...state,
     todoList: state.todoList.filter((_, i) => i !== index),
   })),
-  on(loadTodoItems, (state) => ({
+  on(loadTodoItems, (state:ItemListState) => ({
     ...state,
     load: true,
   })),
-  on(addTodoItems, (state, { todo }) => {
+  on(addTodoItems, (state:ItemListState, { todo }) => {
     return {
       ...state,
       todoList: [...state.todoList, todo],
     };
   }),
-  on(loadedTodoItems, (state, { todoList }) => ({
+  on(loadedTodoItems, (state:ItemListState, { todoList }) => ({
     ...state,
     load: false,
     todoList,
   })),
-  on(addSubTodoItems, (state, { todoId, subTodo }) => ({
+  on(addSubTodoItems, (state:ItemListState, { todoId, subTodo }) => ({
     ...state,
     todoList: state.todoList.map((todo) =>
       todo.id === todoId
@@ -46,7 +46,7 @@ export const itemListReducer = createReducer(
         : todo
     ),
   })),
-  on(deleteSubTodoItems, (state, { todoId, subTodoId }) => ({
+  on(deleteSubTodoItems, (state:ItemListState, { todoId, subTodoId }) => ({
     ...state,
     todoList: state.todoList.map((todo) =>
       todo.id === todoId
@@ -59,7 +59,7 @@ export const itemListReducer = createReducer(
         : todo
     ),
   })),
-  on(updateTodoItems, (state, { todoId }) => ({
+  on(updateTodoItems, (state:ItemListState, { todoId }) => ({
     ...state,
     todoList: state.todoList.map((todo) =>
       todo.id === todoId
@@ -74,23 +74,23 @@ export const itemListReducer = createReducer(
         : todo
     ),
   })),
-  on(sortTodos, (state, { sortType }) => {
+  on(sortTodos, (state:ItemListState, { sortType }) => {
     let sortedTodos: Todo[] = [...state.todoList];
     switch (sortType) {
       case SortType.COMPLETED:
-        sortedTodos.sort((a, b) =>
+        sortedTodos.sort((a:Todo, b:Todo) =>
           a.completed === b.completed ? 0 : a.completed ? -1 : 1
         );
         break;
       case SortType.DATE:
-        sortedTodos.sort((a, b) => {
+        sortedTodos.sort((a:Todo, b:Todo) => {
           const dateb = new Date(b.dateCreated ?? 0).getTime();
           const datea = new Date(a.dateCreated ?? 0).getTime();
           return datea > dateb ? 1 : -1;
         });
         break;
       case SortType.ALPHABETICAL:
-        sortedTodos.sort((a, b) => a.title.localeCompare(b.title));
+        sortedTodos.sort((a:Todo, b:Todo) => a.title.localeCompare(b.title));
         break;
     }
     return {
@@ -98,13 +98,13 @@ export const itemListReducer = createReducer(
       todoList: sortedTodos,
     };
   }),
-  on(updateSubTodoItem, (state, { todoId, subTodoId }) => ({
+  on(updateSubTodoItem, (state:ItemListState, { todoId, subTodoId }) => ({
     ...state,
-    todoList: state.todoList.map((todo) =>
+    todoList: state.todoList.map((todo:Todo) =>
       todo.id === todoId
         ? {
             ...todo,
-            subTodos: todo.subTodos?.map((subTodo) =>
+            subTodos: todo.subTodos?.map((subTodo:Todo) =>
               subTodo.id === subTodoId
                 ? { ...subTodo, completed: !subTodo.completed }
                 : subTodo
