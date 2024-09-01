@@ -18,9 +18,15 @@ Run `ng build` to build the project. The build artifacts will be stored in the `
 
 Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
 
-## Running end-to-end tests
+## Structure
 
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
+- **SRC**: This is our main folder.
+  - **App**: This folder contains the core functionality of our app.
+    - **Type**: Contains interfaces.
+    - **Page**: Contains container with logic of the components.
+    - **Services**:Contains Services
+    - **State**: Contains Action and Reducer of NGRX.
+    - **Components**: Reusable components across the application.
 
 ## Further help
 

@@ -1,0 +1,31 @@
+<div class="input-container">
+  <h1 class="title">TO-DOS</h1>
+  <input
+    #todoTitle
+    class="input-container"
+    type="text"
+    placeholder="Add new todo"
+    (keydown.enter)="addTodo(todoTitle);"
+  />
+  <div class="dropdown-container">
+    <label for="todo-filter" class="dropdown-label">Filter:</label>
+    <select id="todo-filter" (change)="onSortChange($event)" class="dropdown">
+      <option value="COMPLETED">Completed</option>
+      <option value="DATE">Date</option>
+      <option value="ALPHABETICAL">Alphabetical</option>
+    </select>
+  </div>
+</div>
+
+<div class="container-cards">
+  <ul>
+    <li
+      *ngFor="let todo of todos$ | async; let i = index"
+      class="card"
+      [class.completed]="todo.completed"
+      [class.animate-complete]="todo.completed"
+    >
+      <app-list [todo]="todo" [index]="i"></app-list>
+    </li>
+  </ul>
+</div>

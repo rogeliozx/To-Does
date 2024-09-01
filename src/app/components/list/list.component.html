@@ -1,0 +1,33 @@
+<div>
+  <button (click)="deleteTodo()" class="delete-button" aria-label="Delete">
+    &times;
+  </button>
+
+  <button (click)="toggleCollapse()" class="collapse-button">
+    <span class="collapse-icon" [ngClass]="{ 'icon-expand': !isCollapsed, 'icon-collapse': isCollapsed }"></span>
+  </button>
+  <label class="checkbox-container">
+    <input type="checkbox" [(ngModel)]="todo.completed" (change)="toggleComplete(todo.id)" />
+    <span class="checkmark"></span>
+    <span [class.completed]="todo.completed">{{ todo.title }}</span>
+  </label>
+  <div #collapsibleContent [ngClass]="{ collapsed: isCollapsed }">
+    <div [class.hide]="todo.completed">
+      <input #subtaskName class="input-container" type="text" placeholder="Add subtask"
+        (keydown.enter)="addSubtask(todo, subtaskName)" />
+    </div>
+
+    <ul>
+      <li *ngFor="let subtask of todo.subTodos">
+        <label class="checkbox-container">
+          <input type="checkbox" [(ngModel)]="subtask.completed" (change)="toggleSubtaskComplete(subtask.id)" />
+          <span class="checkmark"></span>
+          <span [class.completed]="subtask.completed">{{ subtask.title }}</span>
+          <button class="delete-button delete-subtodo" [class.hide]="todo.completed" (click)="deleteSubtask(todo.id, subtask.id)">
+            &times;
+          </button>
+        </label>
+      </li>
+    </ul>
+  </div>
+</div>
