@@ -83,11 +83,11 @@ export const itemListReducer = createReducer(
         );
         break;
       case SortType.DATE:
-        sortedTodos.sort(
-          (a, b) =>
-            new Date(b.dateCreated ?? 0).getTime() -
-            new Date(a.dateCreated ?? 0).getTime()
-        );
+        sortedTodos.sort((a, b) => {
+          const dateb = new Date(b.dateCreated ?? 0).getTime();
+          const datea = new Date(a.dateCreated ?? 0).getTime();
+          return datea > dateb ? 1 : -1;
+        });
         break;
       case SortType.ALPHABETICAL:
         sortedTodos.sort((a, b) => a.title.localeCompare(b.title));
